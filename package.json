@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "prod":"node index"
+
   },
   "repository": {
     "type": "git",
