@@ -1,4 +1,5 @@
 const UserService = require('../services/user.services');
+const bcrypt =  require ('bcrypt')
 
 const register = async (req, res) => {
     try {
@@ -12,14 +13,14 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await UserService.checkuser(email, password);
+        const user = await UserService.checkuser(email);
         if(!user){
-            throw new error ('user not found')
+            throw new Error('user not found');
         }
 
-        const isMatch = await bcrypt.compare(password,user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            throw new error ('invailed password')
+            throw new Error('invailed password');
         }
 
         let tokenData ={
@@ -27,7 +28,7 @@ const login = async (req, res) => {
             email : user.email
         }
 
-        const token = await UserService.generatetoken(tokenData,secretkey);
+        const token = await UserService.generatetoken(tokenData,'secretkey');
           res.status(200).json({
             status:true,
             token:token
